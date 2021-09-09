@@ -1,0 +1,38 @@
+name: s3-uploader
+namespace: serverless-demo
+runtime: nodejs14
+source:
+  sourceType: inline
+subscriptions:
+  - name: ems-test
+    filter:
+      filters:
+        - eventSource:
+            property: source
+            type: exact
+            value: ''
+          eventType:
+            property: type
+            type: exact
+            value: sap.kyma.custom.demo.data.arrived.v1
+env:
+  - name: S3_BUCKET
+    valueFrom:
+      configMapKeyRef:
+        name: s3-config
+        key: s3-bucket
+  - name: S3_ENDPOINT
+    valueFrom:
+      configMapKeyRef:
+        name: s3-config
+        key: s3-endpoint
+  - name: S3_ACCESSKEY_ID
+    valueFrom:
+      secretKeyRef:
+        name: s3-secret
+        key: s3-accesskey-id
+  - name: S3_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: s3-secret
+        key: s3-secret
