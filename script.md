@@ -157,3 +157,22 @@ Inspect metrics using grafana
 ```
  Oh.. and BTW vendor is : "+process.env['vendor']
 ```
+
+Custom Docker registry
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/dockerconfigjson
+metadata:
+ name: serverless-registry-config
+ namespace: serverless-demo
+ labels:
+   serverless.kyma-project.io/remote-registry: config
+data:
+ username: $(echo -n "${DOCKER_USERNAME}" | base64)
+ password: $(echo -n "${DOCKER_PASSWORD}" | base64)
+ serverAddress: $(echo -n "${SERVER_ADDRESS}" | base64)
+ registryAddress: $(echo -n "${REGISTRY_ADDRESS}" | base64)
+EOF
+```
