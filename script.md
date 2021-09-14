@@ -56,6 +56,11 @@ function readEnv(env = "") {
 }
 ```
 
+Edit package.json
+```
+    "aws-sdk": "^2.553.0"
+```
+
 Edit config.yaml to add ems subscriptions
 
 ```
